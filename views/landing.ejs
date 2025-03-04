@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Paithani Marketplace - Login & Register</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Pacifico&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #584a4a; /* Soft cream background for Paithani elegance */
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            position: relative; /* Ensure background animation works with positioning */
+        }
+        .animated-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1; /* Behind content */
+            opacity: 0.3; /* Subtle transparency to not overpower content */
+            background: url('https://kapsepaithani.org/wp-content/uploads/2024/05/Kapse-Web-Banner-1920x834-01.png') repeat;
+            background-size: cover; /* or 'contain' or specific size like '200px 200px' */
+            animation: paithaniPattern 6s ease-in-out infinite;
+        }
+        @keyframes paithaniPattern {
+            0% { background-position: 0 0; opacity: 0.3; }
+            50% { background-position: 20px 20px; opacity: 0.5; }
+            100% { background-position: 0 0; opacity: 0.3; }
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            position: relative; /* Ensure content is above background */
+            z-index: 1; /* Above the animated background */
+        }
+        .header {
+            background: linear-gradient(to right, #6a5acd, #9370db); /* Royal purple gradient for header */
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(106, 90, 205, 0.2);
+            border-radius: 0 0 8px 8px;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInDown 1s ease-in;
+        }
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .header h1 {
+            font-family: 'Dancing Script', cursive; /* Elegant, cursive font for Paithani theme */
+            font-size: 36px;
+            font-weight: 700;
+            margin: 0;
+            position: relative;
+            z-index: 1;
+            animation: pulse 2s infinite; /* Pulse animation for attractiveness */
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .hero {
+            background: #fff5e6; /* Light peach background for Paithani warmth */
+            padding: 2rem 1rem;
+            text-align: center;
+            border-radius: 8px;
+            margin-top: 2rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 600px;
+            animation: fadeIn 1s ease-in;
+        }
+        .hero h2 {
+            color: #d4a017; /* Gold for Paithani elegance */
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            font-weight: 400;
+            margin-bottom: 1rem;
+            text-shadow: 0 2px 4px rgba(212, 160, 23, 0.3);
+            animation: bounceIn 1.5s ease-in-out;
+        }
+        .hero p {
+            color: #191536; /* Royal purple for description */
+            font-size: 1rem;
+            margin-bottom: 0;
+        }
+        .tabs {
+            display: flex;
+            margin-top: 2rem;
+            border-bottom: 2px solid #d4a017; /* Gold border for Paithani theme */
+            justify-content: center;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeIn 1s ease-in;
+        }
+        .tab {
+            padding: 0.75rem 1.5rem;
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #878787;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            transition: color 0.3s ease, border-color 0.3s ease, transform 0.3s ease;
+        }
+        .tab.active {
+            color: #d4a017; /* Gold for active tab */
+            border-color: #d4a017;
+            transform: translateY(-2px);
+        }
+        .tab:hover {
+            color: #ffd700; /* Lighter gold on hover */
+            transform: translateY(-2px);
+        }
+        .form-container {
+            background: rgb(248, 248, 248);
+            border: 2px solid #d4a017; /* Gold border for Paithani theme */
+            border-radius: 10px;
+            box-shadow: 0 6px 15px rgba(212, 160, 23, 0.1);
+            padding: 2rem;
+            margin-top: 2rem;
+            width: 100%;
+            max-width: 400px;
+            animation: fadeInUp 1s ease-in;
+            position: relative;
+            overflow: hidden;
+            
+        }
+        .form-container::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .form-section {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+        .form-section.active {
+            display: block;
+            opacity: 1;
+        }
+        .form-container h2 {
+            color: #8b4513; /* Rich brown for Paithani elegance */
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .input-field:focus {
+            border-color: #d4a017; /* Paithani gold for focus */
+            outline: none;
+            box-shadow: 0 0 5px rgba(212, 160, 23, 0.3);
+        }
+        .submit-btn {
+            background: linear-gradient(to right, #d4a017, #ffd700); /* Gold gradient for buttons */
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            width: 100%;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .submit-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .submit-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 6px 15px rgba(212, 160, 23, 0.4);
+            background: linear-gradient(to right, #c68e17, #e6b800);
+        }
+        .forgot-password {
+            text-align: right;
+            margin-top: 0.5rem;
+        }
+        .forgot-password a {
+            font-size: 0.875rem;
+            color: #6a5acd; /* Royal purple for forgot password link */
+            text-decoration: underline;
+        }
+        .forgot-password a:hover {
+            color: #9370db;
+        }
+        .message {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            padding: 0.75rem;
+            border-radius: 4px;
+            position: relative;
+            z-index: 1;
+        }
+        .error-message {
+            color: #dc3545; /* Red for error messages */
+            background-color: #fee2e2;
+            border: 1px solid #dc3545;
+        }
+        .success-message {
+            color: #388e3c; /* Green for success messages */
+            background-color: #e4e5e4;
+            border: 1px solid #388e3c;
+        }
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            color: #878787;
+            font-size: 0.875rem;
+            margin-top: 2rem;
+            width: 100%;
+        }
+        .link {
+            color: #d4a017; /* Gold link for Paithani theme */
+            text-decoration: underline;
+        }
+        .link:hover {
+            color: #ffd700;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.95); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes pulse {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes paithaniPattern {
+            0% { background-position: 0 0; opacity: 0.3; }
+            50% { background-position: 20px 20px; opacity: 0.5; }
+            100% { background-position: 0 0; opacity: 0.3; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <div class="animated-background"></div> <!-- Animated background added here -->
+
+    <header class="header">
+        <h1>🧵 Paithani Marketplace</h1>
+    </header>
+
+    <main class="flex-grow">
+        <div class="container">
+            <div class="hero">
+                <h2 class="text-3xl font-semibold text-gray-800 mb-2">Welcome to Paithani Marketplace</h2>
+                <p class="text-gray-600 mb-4">Discover and trade exquisite Paithani sarees with ease. Join our community of buyers and sellers today!</p>
+            </div>
+
+            <div class="tabs">
+                <div class="tab <%= activeForm === 'login' ? 'active' : '' %>" onclick="showForm('login')">Login</div>
+                <div class="tab <%= activeForm === 'register' ? 'active' : '' %>" onclick="showForm('register')">Register</div>
+            </div>
+
+            <div class="form-container">
+                <% if (message) { %>
+                    <div class="message <%= messageType === 'success' ? 'success-message' : 'error-message' %>">
+                        <%= message %>
+                    </div>
+                <% } %>
+
+                <!-- Login Form -->
+                <div id="login-form" class="form-section <%= activeForm === 'login' ? 'active' : '' %>">
+                    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">Sign In to Your Account</h2>
+                    <form class="space-y-6" method="POST" action="/login">
+                        <div>
+                            <label for="email" class="label">Email Address</label>
+                            <input id="email" name="email" type="email" class="input-field" placeholder="e.g., john@example.com" required>
+                        </div>
+                        <div>
+                            <label for="password" class="label">Password</label>
+                            <input id="password" name="password" type="password" class="input-field" placeholder="Enter your password" required>
+                            <div class="forgot-password">
+                                <a href="#" class="link">Forgot Password?</a>
+                            </div>
+                        </div>
+                        <button type="submit" class="submit-btn">Login</button>
+                    </form>
+                </div>
+
+                <!-- Register Form -->
+                <div id="register-form" class="form-section <%= activeForm === 'register' ? 'active' : '' %>">
+                    <h2 class="text-xl font-semibold text-gray-800 text-center mb-6">Create Your Account</h2>
+                    <form class="space-y-6" method="POST" action="/register">
+                        <div>
+                            <label for="username" class="label">Username</label>
+                            <input id="username" name="username" type="text" class="input-field" placeholder="e.g., JohnDoe" required>
+                        </div>
+                        <div>
+                            <label for="email" class="label">Email Address</label>
+                            <input id="email" name="email" type="email" class="input-field" placeholder="e.g., john@example.com" required>
+                        </div>
+                        <div>
+                            <label for="password" class="label">Password</label>
+                            <input id="password" name="password" type="password" class="input-field" placeholder="At least 6 characters" required>
+                        </div>
+                        <div>
+                            <label for="gender" class="label">Gender</label>
+                            <select id="gender" name="gender" class="input-field" required>
+                                <option value="" disabled selected>Select your gender</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                        <div>
+                            <label for="role" class="label">Role</label>
+                            <select id="role" name="role" class="input-field" required>
+                                <option value="" disabled selected>Select your role</option>
+                                <option value="buyer">Buyer</option>
+                                <option value="seller">Seller</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="submit-btn">Register</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Paithani Marketplace | <a href="#" class="link">Contact Us</a></p>
+    </footer>
+
+    <script>
+        function showForm(formType) {
+            const loginForm = document.getElementById('login-form');
+            const registerForm = document.getElementById('register-form');
+            const loginTab = document.querySelector('.tab:nth-child(1)');
+            const registerTab = document.querySelector('.tab:nth-child(2)');
+
+            if (formType === 'login') {
+                loginForm.classList.add('active');
+                registerForm.classList.remove('active');
+                loginTab.classList.add('active');
+                registerTab.classList.remove('active');
+            } else {
+                registerForm.classList.add('active');
+                loginForm.classList.remove('active');
+                registerTab.classList.add('active');
+                loginTab.classList.remove('active');
+            }
+        }
+
+        // Set default active form if not specified
+        document.addEventListener('DOMContentLoaded', () => {
+            const activeForm = '<%= activeForm || "login" %>';
+            if (activeForm) showForm(activeForm);
+        });
+    </script>
+</body>
+</html>

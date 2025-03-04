@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edit Product - Paithani Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f1f3f6;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background: #2874f0;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: fadeInDown 1s ease-in;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0;
+        }
+        .content {
+            background: white;
+            padding: 20px;
+            border-radius: 12px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 1s ease-in;
+        }
+        .form-header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            color: #d4a017; /* Gold for Paithani elegance */
+            font-family: 'Pacifico', cursive;
+            font-size: 2rem;
+            font-weight: 400;
+            text-shadow: 0 2px 4px rgba(212, 160, 23, 0.3);
+            animation: bounceIn 1.5s ease-in-out;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        .label {
+            color: #212121;
+            font-size: 16px;
+            margin-bottom: 5px;
+            display: block;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #d4a017;
+            outline: none;
+            box-shadow: 0 0 6px rgba(212, 160, 23, 0.3);
+        }
+        .error {
+            color: #e53e3e;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+        .btn {
+            background: linear-gradient(to right, #d4a017, #ffd700); /* Gold gradient for buttons */
+            color: white;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-size: 16px;
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .btn:hover {
+            background: linear-gradient(to right, #c68e17, #e6b800);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 18px rgba(212, 160, 23, 0.4);
+        }
+        .btn-cancel {
+            background: linear-gradient(to right, #a9a9a9, #d3d3d3); /* Light gray gradient for Cancel */
+            color: #4a5568;
+            margin-left: 0.5rem;
+        }
+        .btn-cancel:hover {
+            background: linear-gradient(to right, #808080, #b0b0b0);
+            box-shadow: 0 4px 10px rgba(169, 169, 169, 0.3);
+        }
+        .footer {
+            text-align: center;
+            padding: 1rem;
+            color: #878787; /* Gray text, matching other pages */
+            font-size: 0.875rem;
+            margin-top: 2rem;
+        }
+        .link {
+            color: #d4a017; /* Gold link for Paithani theme */
+            text-decoration: underline;
+        }
+        .link:hover {
+            color: #ffd700;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            70% { transform: scale(0.95); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <header class="header">
+        <h1>🧵 Paithani Marketplace</h1>
+    </header>
+
+    <main class="flex-grow">
+        <div class="container">
+            <div class="content">
+                <h2 class="form-header">Edit Product</h2>
+
+                <% if (error) { %>
+                    <p class="error"><%= error %></p>
+                <% } %>
+
+                <form method="POST" action="/edit-product/<%= product._id %>" enctype="multipart/form-data">
+                    <div class="form-group">
+                        <label for="name" class="label">Product Name</label>
+                        <input type="text" id="name" name="name" class="input-field" value="<%= product.name %>" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="price" class="label">Price (₹)</label>
+                        <input type="number" id="price" name="price" class="input-field" value="<%= product.price %>" required min="1" step="1">
+                    </div>
+                    <div class="form-group">
+                        <label for="description" class="label">Description (Optional)</label>
+                        <textarea id="description" name="description" class="input-field" placeholder="Describe the Paithani saree..."><%= product.description || '' %></textarea>
+                    </div>
+                    <div class="form-group">
+                        <label for="images" class="label">Product Photos (Up to 5 images, leave empty to keep current)</label>
+                        <input type="file" id="images" name="images" class="input-field" accept="image/*" multiple>
+                        <% if (product.images && product.images.length > 0) { %>
+                            <p class="text-gray-600 mt-2">Current Images:</p>
+                            <div class="flex gap-2 overflow-x-auto">
+                                <% product.images.forEach(image => { %>
+                                    <img src="<%= image %>" alt="<%= product.name %>" class="w-20 h-20 object-cover rounded">
+                                <% }); %>
+                            </div>
+                        <% } %>
+                    </div>
+                    <div class="text-center">
+                        <button type="submit" class="btn">Save Changes</button>
+                        <a href="/shop-full/<%= shop._id %>" class="btn btn-cancel">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Paithani Marketplace | <a href="#" class="link">Contact Us</a> | <a href="#" class="link">Terms of Use</a></p>
+    </footer>
+</body>
+</html>

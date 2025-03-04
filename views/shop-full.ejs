@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= shop.name %> - Paithani Marketplace</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&family=Pacifico&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f1f3f6;
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+        }
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+        }
+        .header {
+            background: #2874f0;
+            color: white;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            position: relative;
+            animation: fadeInDown 1s ease-in;
+        }
+        .header h1 {
+            font-size: 24px;
+            font-weight: 500;
+            margin: 0;
+        }
+        .shop-name-banner {
+            background: linear-gradient(to right, #ed8936, #f6ad55);
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+            font-family: 'Pacifico', cursive;
+            font-size: 24px;
+            font-weight: 400;
+            border-radius: 0 0 4px 4px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            animation: wooAnimation 2s infinite;
+        }
+        @keyframes wooAnimation {
+            0% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.1); opacity: 0.9; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        .toggle-btn {
+            position: absolute;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            width: 30px;
+            height: 20px;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .toggle-btn span {
+            width: 100%;
+            height: 3px;
+            background: white;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+        }
+        .toggle-btn:hover span {
+            background: #f6ad55;
+        }
+        .sidebar {
+            width: 250px;
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+            position: fixed;
+            top: 110px;
+            left: -260px;
+            height: calc(100% - 130px);
+            transition: left 0.5s ease;
+            z-index: 10;
+        }
+        .sidebar.active {
+            left: 0;
+            animation: slideInLeft 0.5s ease-in;
+        }
+        .shop-title {
+            color: #212121;
+            font-size: 22px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .shop-desc {
+            color: #878787;
+            font-size: 14px;
+            line-height: 1.5;
+            margin-bottom: 15px;
+        }
+        .shop-meta {
+            color: #388e3c;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .user-profile {
+            margin-top: 20px;
+            border-top: 1px solid #e0e0e0;
+            padding-top: 15px;
+        }
+        .user-title {
+            color: #212121;
+            font-size: 18px;
+            font-weight: 500;
+            margin-bottom: 10px;
+        }
+        .user-meta {
+            color: #878787;
+            font-size: 14px;
+            margin-bottom: 8px;
+        }
+        .main-content {
+            flex: 1;
+            margin-left: 10px;
+        }
+        .content {
+            background: white;
+            padding: 20px;
+            border-radius: 4px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.05);
+            animation: fadeIn 1s ease-in;
+        }
+        .search-bar {
+            width: 100%;
+            padding: 10px 15px;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+            font-size: 14px;
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            background: #f9f9f9 url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242 0a5 5 0 1 1 0-10 5 5 0 0 1 0 10z"/></svg>') no-repeat 10px center;
+            padding-left: 35px;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+        .search-bar:focus {
+            border-color: #d4a017; /* Paithani gold for focus */
+            outline: none;
+            background-color: white;
+            box-shadow: 0 0 6px rgba(212, 160, 23, 0.3); /* Larger shadow */
+        }
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Larger card width */
+            gap: 20px; /* Increased gap for better spacing */
+            margin-top: 20px;
+        }
+        .product-card {
+            background: #fff5e6; /* Light peach background for Paithani elegance */
+            border: 2px solid #d4a017; /* Gold border for Paithani theme */
+            border-radius: 12px; /* Larger border radius for a more prominent frame */
+            padding: 20px; /* Increased padding for larger frame */
+            text-align: center;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            animation: fadeInUp 1s ease-in;
+        }
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+            opacity: 0.1;
+            z-index: 0;
+        }
+        .product-card:hover {
+            transform: translateY(-8px) scale(1.02); /* Increased hover effect */
+            box-shadow: 0 8px 20px rgba(212, 160, 23, 0.3); /* Larger shadow for prominence */
+        }
+        .product-images {
+            display: flex;
+            gap: 1rem; /* Increased gap between images */
+            overflow-x: auto;
+            margin-bottom: 15px; /* Increased margin for better spacing */
+            padding: 10px; /* Increased padding */
+        }
+        .product-image {
+            width: 200px; /* Larger image size */
+            height: 200px; /* Larger image size */
+            object-fit: contain;
+            border-radius: 8px; /* Larger border radius for images */
+            transition: transform 0.3s ease;
+            position: relative;
+            z-index: 1;
+        }
+        .product-image:hover {
+            transform: scale(1.1);
+        }
+        .product-name {
+            color: #8b4513; /* Rich brown for Paithani elegance */
+            font-size: 20px; /* Larger font size for name */
+            font-weight: 500;
+            margin-bottom: 10px; /* Increased margin */
+            height: 50px; /* Increased height for longer text */
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-family: 'Roboto', sans-serif;
+        }
+        .product-pattern {
+            color: #6a5acd; /* Royal purple for pattern, inspired by Paithani colors */
+            font-size: 16px; /* Larger font size for pattern */
+            margin-bottom: 10px; /* Increased margin */
+            font-style: italic;
+        }
+        .product-price {
+            color: #d4a017; /* Gold for price, reflecting Paithani richness */
+            font-size: 22px; /* Larger font size for price */
+            font-weight: 600;
+            margin-bottom: 15px; /* Increased margin */
+        }
+        .btn {
+            background: linear-gradient(to right, #d4a017, #ffd700); /* Gold gradient for buttons */
+            color: white;
+            padding: 10px 20px; /* Larger padding for buttons */
+            border-radius: 6px; /* Larger border radius */
+            font-size: 16px; /* Larger font size */
+            font-weight: 600;
+            text-decoration: none;
+            display: inline-block;
+            transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+            border: none;
+            cursor: pointer;
+            position: relative;
+            z-index: 1;
+        }
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+            opacity: 0.1;
+            z-index: -1;
+        }
+        .btn:hover {
+            background: linear-gradient(to right, #c68e17, #e6b800);
+            transform: translateY(-3px); /* Increased hover effect */
+            box-shadow: 0 6px 18px rgba(212, 160, 23, 0.4); /* Larger shadow */
+        }
+        .btn-buy {
+            background: linear-gradient(to right, #6a5acd, #9370db); /* Royal purple gradient for Buy Now */
+        }
+        .btn-buy:hover {
+            background: linear-gradient(to right, #5a4da6, #7b68ee);
+        }
+        .btn-add {
+            background: linear-gradient(to right, #388e3c, #4caf50); /* Green gradient for Add Product */
+            margin: 0 0 20px 0;
+        }
+        .btn-add:hover {
+            background: linear-gradient(to right, #2e7d32, #3cba41);
+        }
+        .btn-edit {
+            background: linear-gradient(to right, #3182ce, #63b3ed); /* Blue gradient for Edit */
+            margin-right: 0.5rem;
+        }
+        .btn-edit:hover {
+            background: linear-gradient(to right, #2a69ac, #4d9eda);
+        }
+        .btn-delete {
+            background: linear-gradient(to right, #e53e3e, #fc8181); /* Red gradient for Delete */
+        }
+        .btn-delete:hover {
+            background: linear-gradient(to right, #c53030, #f56565);
+        }
+        .form-container {
+            background: #f9f9f9;
+            padding: 15px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            display: none;
+            animation: fadeIn 0.5s ease-in;
+        }
+        .form-container.active {
+            display: block;
+        }
+        .input-field {
+            width: 100%;
+            padding: 10px; /* Larger padding */
+            border: 1px solid #e0e0e0;
+            border-radius: 4px; /* Larger border radius */
+            margin-bottom: 12px; /* Increased margin */
+            font-size: 16px; /* Larger font size */
+            box-sizing: border-box;
+            transition: border-color 0.3s ease, box-shadow 0.3s ease;
+        }
+        .input-field:focus {
+            border-color: #d4a017;
+            outline: none;
+            box-shadow: 0 0 6px rgba(212, 160, 23, 0.3); /* Larger shadow */
+        }
+        .loading-spinner {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 1000;
+            display: none;
+        }
+        .loading-spinner.active {
+            display: block;
+        }
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #2874f0;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+        }
+        @keyframes spin {
+            0% { transform: translate(-50%, -50%) rotate(0deg); }
+            100% { transform: translate(-50%, -50%) rotate(360deg); }
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes slideInLeft {
+            from { left: -260px; opacity: 0; }
+            to { left: 0; opacity: 1; }
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col">
+    <div class="loading-spinner" id="loading-spinner">
+        <div class="spinner"></div>
+    </div>
+
+    <header class="header">
+        <div class="toggle-btn" onclick="toggleSidebar()">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+        <h1>🧵 Paithani Marketplace</h1>
+    </header>
+
+    <div class="shop-name-banner">
+        <%= shop.name %>
+    </div>
+
+    <main class="flex-grow">
+        <div class="container">
+            <div class="sidebar" id="sidebar">
+                <!-- Shop Profile -->
+                <h2 class="shop-title"><%= shop.name %></h2>
+                <p class="shop-desc"><%= shop.description || 'Explore our exquisite collection of Paithani sarees.' %></p>
+                <p class="shop-meta">Contact: <%= shop.contact || 'Not provided' %></p>
+                <p class="shop-meta">Location: <%= shop.place %></p>
+
+                <!-- User Profile -->
+                <div class="user-profile">
+                    <h3 class="user-title">Shop Owner</h3>
+                    <p class="user-meta">Username: <%= user.username %></p>
+                    <p class="user-meta">Email: <%= user.email %></p>
+                    <p class="user-meta">Role: <%= user.role.charAt(0).toUpperCase() + user.role.slice(1) %></p>
+                </div>
+            </div>
+            <div class="main-content">
+                <div class="content">
+                    <input type="text" id="search-bar" class="search-bar" placeholder="Search Paithani by Pattern...">
+
+                    <% if (user && user._id.toString() === shop.owner.toString()) { %>
+                        <div class="text-center">
+                            <a href="#" class="btn btn-add" onclick="toggleForm()">Add Product</a>
+                        </div>
+                        <div id="add-product-form" class="form-container">
+                            <form method="POST" action="/add-product/<%= shop._id %>" enctype="multipart/form-data">
+                                <input type="text" name="name" class="input-field" placeholder="Paithani Pattern Name" required>
+                                <input type="number" name="price" class="input-field" placeholder="Price (₹)" required min="1" step="1">
+                                <label for="productDescription" class="label text-sm">Description (Optional)</label>
+                                <textarea name="description" id="productDescription" class="input-field" placeholder="Describe the Paithani saree..."></textarea>
+                                <label for="productImages" class="label text-sm">Product Photos (Up to 5 images)</label>
+                                <input type="file" id="productImages" name="images" class="input-field" accept="image/*" multiple required>
+                                <div class="flex justify-between mt-2">
+                                    <button type="submit" class="btn btn-add">Add Product</button>
+                                    <button type="button" class="btn btn-cancel" onclick="toggleForm()">Cancel</button>
+                                </div>
+                            </form>
+                        </div>
+                    <% } %>
+
+                    <h3 class="text-lg font-medium text-gray-700 mb-4">Our Paithani Collection</h3>
+                    <div id="product-grid" class="product-grid">
+                        <% shop.products.forEach(product => { %>
+                            <div class="product-card" data-pattern="<%= product.name.toLowerCase() %>">
+                                <div class="product-images">
+                                    <% if (product.images && product.images.length > 0) { %>
+                                        <% product.images.forEach(image => { %>
+                                            <img src="<%= image %>" alt="<%= product.name %>" class="product-image">
+                                        <% }); %>
+                                    <% } else if (product.image) { %>
+                                        <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+                                    <% } else { %>
+                                        <div class="product-image" style="background: #e2e8f0; text-align: center; line-height: 200px; color: #4a5568;">No Image</div>
+                                    <% } %>
+                                </div>
+                                <h3 class="product-name"><%= product.name %></h3>
+                                <p class="product-price">₹<%= product.price.toFixed(2) %></p>
+                                <% if (user && user._id.toString() === shop.owner.toString()) { %>
+                                    <div class="flex justify-center mt-4">
+                                        <a href="/edit-product/<%= product._id %>" class="btn btn-edit">Edit Product</a>
+                                        <a href="/delete-product/<%= shop._id %>/<%= product._id %>" class="btn btn-delete" onclick="return confirm('Are you sure you want to delete this product?')">Delete Product</a>
+                                    </div>
+                                <% } %>
+                            </div>
+                        <% }); %>
+                    </div>
+                    <% if (shop.products.length === 0) { %>
+                        <p class="text-gray-600">No Paithani sarees available yet. Check back soon!</p>
+                    <% } %>
+
+                    <div class="text-center mt-6">
+                        <a href="/seller-shops" class="btn">Back to My Shops</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="footer">
+        <p>© 2025 Paithani Marketplace | <a href="#" class="link">Contact Us</a> | <a href="#" class="link">Terms of Use</a></p>
+    </footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Show loading spinner briefly (simulated)
+        $(document).ready(function() {
+            $('#loading-spinner').addClass('active');
+            setTimeout(function() {
+                $('#loading-spinner').removeClass('active');
+            }, 1000); // 1-second delay for effect
+        });
+
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            sidebar.classList.toggle('active');
+        }
+
+        function toggleForm() {
+            const form = document.getElementById('add-product-form');
+            form.classList.toggle('active');
+        }
+
+        // Search functionality
+        document.getElementById('search-bar').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            const products = document.querySelectorAll('.product-card');
+            products.forEach(product => {
+                const pattern = product.getAttribute('data-pattern');
+                if (pattern.includes(query)) {
+                    product.style.display = 'block';
+                } else {
+                    product.style.display = 'none';
+                }
+            });
+        });
+
+        // Banner slideshow (simulated with placeholders)
+        let slideIndex = 0;
+        const slides = [
+            'https://via.placeholder.com/1300x250?text=Paithani+Banner+1',
+            'https://via.placeholder.com/1300x250?text=Paithani+Banner+2',
+            'https://via.placeholder.com/1300x250?text=Paithani+Banner+3'
+        ];
+
+        function showSlides() {
+            const bannerContainer = document.querySelector('.banner-container');
+            slides.forEach((slide, index) => {
+                const img = document.createElement('img');
+                img.src = slide;
+                img.className = 'banner-slide';
+                if (index === slideIndex) img.classList.add('active');
+                bannerContainer.appendChild(img);
+            });
+            slideIndex = (slideIndex + 1) % slides.length;
+            setTimeout(() => {
+                document.querySelectorAll('.banner-slide').forEach(slide => slide.remove());
+                showSlides();
+            }, 5000); // Change slide every 5 seconds
+        }
+
+        // Start the slideshow
+        showSlides();
+    </script>
+</body>
+</html>

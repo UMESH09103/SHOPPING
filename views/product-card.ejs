@@ -1,0 +1,14 @@
+<div class="product-card" data-pattern="<%= product.name.toLowerCase() %>">
+    <% if (product.image) { %>
+        <img src="<%= product.image %>" alt="<%= product.name %>" class="product-image">
+    <% } else { %>
+        <div class="product-image" style="background: #e0e0e0; text-align: center; line-height: 200px; color: #878787;">No Image</div>
+    <% } %>
+    <h4 class="product-name"><%= product.name %></h4>
+    <p class="product-pattern">Pattern: <%= product.name %></p>
+    <p class="product-price">₹<%= product.price.toLocaleString('en-IN') %></p>
+    <div>
+        <a href="#" class="btn">Add to Cart</a>
+        <a href="#" class="btn btn-buy">Buy Now</a>
+    </div>
+</div>

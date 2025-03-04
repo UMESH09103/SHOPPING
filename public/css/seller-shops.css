@@ -1,0 +1,172 @@
+/* seller-shops.css */
+
+/* Base Styles */
+body {
+    background-color: #f1f3f6; /* Soft cream background for Paithani elegance */
+    font-family: 'Roboto', sans-serif;
+    margin: 0;
+    padding: 0;
+}
+
+/* Container */
+.container {
+    @apply max-w-6xl mx-auto px-8 py-6;
+}
+
+/* Header */
+.header {
+    @apply bg-[#2874f0] text-white p-6 text-center shadow-lg rounded-b-lg mb-8 animate__animated animate__fadeInDown;
+    animation-duration: 1s;
+}
+
+.header h1 {
+    @apply text-3xl font-medium;
+    margin: 0;
+}
+
+/* Content */
+.content {
+    @apply bg-[#fff5e6] rounded-xl shadow-xl p-8 mt-8 flex flex-col min-h-[60vh] animate__animated animate__fadeIn;
+    animation-duration: 1s;
+}
+
+/* Heading */
+.heading {
+    @apply text-center mb-6 text-[#d4a017] font-pacifico text-5xl font-normal;
+    text-shadow: 0 3px 6px rgba(212, 160, 23, 0.4);
+    animation: bounceIn 1.5s ease-in-out;
+}
+
+/* Shop Grid */
+.shop-grid {
+    @apply grid grid-cols-[repeat(auto-fill,minmax(350px,1fr))] gap-10 mt-6;
+}
+
+/* Shop Card */
+.shop-card {
+    @apply bg-white border-2 border-[#d4a017] rounded-2xl shadow-2xl p-6 transition-transform duration-300 hover:translate-y-[-10px] hover:scale-102 hover:shadow-2xl relative overflow-hidden animate__animated animate__fadeInUp;
+    animation-duration: 1s;
+}
+
+.shop-card::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full opacity-15 -z-10;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#d4a017" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+}
+
+/* Shop Image */
+.shop-image {
+    @apply w-full h-[250px] object-cover rounded-xl mb-5 transition-transform duration-300 relative z-10;
+}
+
+.shop-card:hover .shop-image {
+    @apply scale-105;
+}
+
+/* Shop Details */
+.shop-title {
+    @apply text-[#8b4513] text-2xl font-bold mb-4;
+}
+
+.shop-desc {
+    @apply text-[#6a5acd] text-base mb-5 leading-7;
+}
+
+.shop-owner {
+    @apply text-gray-600 text-sm mb-3;
+}
+
+.shop-place {
+    @apply text-[#388e3c] text-sm mb-5 italic;
+}
+
+/* Product List */
+.shop-card h4 {
+    @apply text-lg font-medium text-gray-700 mt-3 mb-2;
+}
+
+.shop-card ul {
+    @apply list-disc pl-6;
+}
+
+.shop-card li {
+    @apply text-gray-800 text-sm mb-1;
+}
+
+/* Buttons */
+.btn {
+    @apply bg-gradient-to-r from-[#d4a017] to-[#ffd700] text-white px-6 py-4 rounded-lg text-base font-semibold transition-transform duration-200 hover:translate-y-[-4px] hover:shadow-2xl hover:from-[#c68e17] hover:to-[#e6b800] inline-block relative z-10;
+}
+
+.btn::before {
+    content: '';
+    @apply absolute top-0 left-0 w-full h-full opacity-15 -z-10;
+    background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>') repeat;
+}
+
+.btn-shop {
+    @apply bg-gradient-to-r from-[#3182ce] to-[#63b3ed] ml-3;
+}
+
+.btn-shop:hover {
+    @apply shadow-2xl shadow-blue-400;
+}
+
+.btn-delete {
+    @apply bg-gradient-to-r from-[#e53e3e] to-[#fc8181] ml-3;
+}
+
+.btn-delete:hover {
+    @apply shadow-2xl shadow-red-400;
+}
+
+.add-shop-btn {
+    @apply bg-gradient-to-r from-[#388e3c] to-[#4caf50] mr-4;
+}
+
+.add-shop-btn:hover {
+    @apply shadow-2xl shadow-green-400;
+}
+
+/* Footer */
+.footer {
+    @apply text-center p-4 text-gray-600 text-sm mt-8;
+}
+
+.link {
+    @apply text-[#d4a017] underline hover:text-[#ffd700];
+}
+
+/* No Shops Message */
+.no-shops {
+    @apply text-center text-[#6a5acd] text-xl p-8 bg-[#fff5e6] rounded-xl shadow-xl animate__animated animate__fadeIn;
+    animation-duration: 1s;
+}
+
+/* Button Container */
+.button-container {
+    @apply flex justify-center mt-auto pt-8;
+}
+
+/* Animations */
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+@keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bounceIn {
+    0% { transform: scale(0.8); opacity: 0; }
+    50% { transform: scale(1.1); opacity: 1; }
+    70% { transform: scale(0.95); }
+    100% { transform: scale(1); opacity: 1; }
+}
